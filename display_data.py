@@ -57,6 +57,16 @@ class ReqHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     def do_GET(self):
         try:
+            health = self.params()['health']
+            if health:
+                self.send_response(200)
+                self.end_headers()
+                self.wfile.write('ok')
+                return
+        except:
+            pass
+
+        try:
             city = self.params()['q']
         except KeyError:
             city = "Berlin"
