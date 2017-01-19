@@ -1,0 +1,19 @@
+FROM ubuntu:14.04
+MAINTAINER Frank Wittig <frank.wittig@here.com>
+
+##### Install Python #####
+RUN apt-get update
+RUN apt-get install -y python
+
+RUN mkdir -p /opt/api-demo
+COPY display_data.py /opt/api-demo/display_data.py
+
+EXPOSE 80
+WORKDIR /opt/api-demo
+
+ENV PORT 80
+ENV TYPE temp
+ENV API_HOST api
+ENV API_PORT 80
+
+CMD ["python", "display_data.py"]
