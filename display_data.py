@@ -11,23 +11,33 @@ import json
 port = int(os.environ['PORT'])
 url = "http://%s:%d/?q=%%s" % (os.environ['API_HOST'], int(os.environ['API_PORT']))
 server_type = os.environ['TYPE']
+try:
+    host = os.environ['HOSTNAME']
+except:
+    host = 'unknown'
 
 page = '''
 <html>
     <header>
         <title>Weather API Demo</title>
         <style type="text/css">
-            #data {
+            body {
                 background: #fff;
-                border: 3px solid black;
-                border-radius: 25px;
-                width: 300px;
-                margin: auto;
                 text-align: center;
-                font-size: 50px;
                 font-family: sans-serif;
             }
-
+            div {
+                width: 300px;
+                margin: auto;
+            }
+            #data {
+                border: 3px solid black;
+                border-radius: 25px;
+                font-size: 50px;
+            }
+            #meta {
+                font-size: 20px;
+            }
             h1 {
                 font-size: 35px;
                 background: #ccc;
@@ -38,6 +48,9 @@ page = '''
         <div id="data">
             <h1>%s</h1>
             <p>%s</p>
+        </div>
+        <div id="meta">
+            <p>Container ID: %s</p>
         </div>
     </body>
 </html>
@@ -76,7 +89,7 @@ class ReqHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type', 'text/html; charset=utf-8')
             self.end_headers()
-            self.wfile.write(page % (city, get_data(city)))
+            self.wfile.write(page % (city, get_data(city), host))
 
         except Exception as e:
             print asctime(), e
