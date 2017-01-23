@@ -5,13 +5,15 @@ MAINTAINER Frank Wittig <frank.wittig@here.com>
 RUN apt-get update
 RUN apt-get install -y python
 
+##### Copy Application #####
 RUN mkdir -p /opt/api-demo
 COPY get_weather.py /opt/api-demo/get_weather.py
 
-EXPOSE 80
-WORKDIR /opt/api-demo
-
+##### Default Config #####
 ENV PORT 80
 ENV APIKEY bcdb859cf276718c1f1d5ca5d2d5ad9e
 
+##### Run Application #####
+EXPOSE 80
+WORKDIR /opt/api-demo
 CMD ["python", "get_weather.py"]

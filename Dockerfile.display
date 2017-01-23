@@ -5,15 +5,17 @@ MAINTAINER Frank Wittig <frank.wittig@here.com>
 RUN apt-get update
 RUN apt-get install -y python
 
+##### Copy Application #####
 RUN mkdir -p /opt/api-demo
 COPY display_data.py /opt/api-demo/display_data.py
 
-EXPOSE 80
-WORKDIR /opt/api-demo
-
+##### Default Config #####
 ENV PORT 80
 ENV TYPE temp
 ENV API_HOST api
 ENV API_PORT 80
 
+##### Run Application #####
+EXPOSE 80
+WORKDIR /opt/api-demo
 CMD ["python", "display_data.py"]

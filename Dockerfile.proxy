@@ -1,0 +1,20 @@
+FROM ubuntu:14.04
+MAINTAINER Frank Wittig <frank.wittig@here.com>
+
+##### Install Nginx #####
+RUN apt-get update
+RUN apt-get install -y nginx
+
+##### Configure #####
+RUN rm -f /etc/nginx/sites-enabled/default
+COPY proxy.conf /etc/nginx/conf.d/proxy.conf
+COPY proxy.sh /usr/local/bin/proxy.sh
+
+##### Default Config #####
+ENV PORT 80
+ENV UPSTREAM app
+
+##### Run Proxy #####
+EXPOSE 80
+CMD /usr/local/bin/proxy.sh
+
